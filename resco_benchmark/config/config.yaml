@@ -20,7 +20,7 @@
             converged: null   # Number of episodes to wait for convergence, null to disable, at least 'episodes' to run
             log_dir: results
             gui: False
-            libsumo: True
+            libsumo: False
             save_frequency: 10
             load_model: null    # TODO reinstate loading
             load_replay: True   # If a replay exists, load it and continue training - only when load_model set
