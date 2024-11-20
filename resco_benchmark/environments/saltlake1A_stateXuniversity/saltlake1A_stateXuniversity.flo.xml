@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2024-03-12 21:26:58 by Eclipse SUMO netedit Version 1.19.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- VTypes -->
+    <vType id="Car" vClass="passenger"/>
+    <!-- Routes -->
+    <route id="7243_SLL" edges="top0A3 A3B3"/>
+    <route id="7243_SLR" edges="top0A3 A3B3"/>
+    <route id="7243_SLT" edges="top0A3 A3B3"/>
+    <route id="7243_SR" edges="top0A3 A3left3"/>
+    <route id="7243_ST" edges="top0A3 A3A2"/>
+    <route id="7243_EL" edges="left3A3 A3top0"/>
+    <route id="7243_ER" edges="left3A3 A3A2"/>
+    <route id="7243_ETL" edges="left3A3 A3B3"/>
+    <route id="7243_ETR" edges="left3A3 A3B3"/>
+    <route id="7243_ETT" edges="left3A3 A3B3"/>
+    <route id="7243_NL" edges="A2A3 A3left3"/>
+    <route id="7243_NRL" edges="A2A3 A3B3"/>
+    <route id="7243_NRR" edges="A2A3 A3B3"/>
+    <route id="7243_NRT" edges="A2A3 A3B3"/>
+    <route id="7243_NT" edges="A2A3 A3top0"/>
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    	
+</routes>

@@ -1,0 +1,149 @@
+# The agent.yaml file contains the configuration of the agents used in the benchmark.
+# The agents are defined by their name and the parameters that are used to configure them.
+
+FIXED: 
+  state: wave
+  reward: throughput  # Rewards are irrelevant for static agents
+  action_set: Phase
+
+STOCHASTIC:
+  state: mplight
+  reward: queue
+
+MAXWAVE:
+  state: wave
+  reward: speed
+
+MAXPRESSURE:
+  state: mplight
+  reward: delay
+
+IDVN:
+  state: extended_state
+  reward: wait
+  batch_size: 32
+  gamma: 0.99
+  epsilon_begin: 1.0
+  epsilon_end: 0.0
+  target_update_steps: 500
+  buffer_size: 40000
+  buffer_type: uniform
+  epsilon_decay_period: 0.8 # 80% of the total number of episodes
+  number_of_layers: 3
+  number_of_units: 512
+  delayed_epsilon: 1
+
+IMultiDQN:
+  state: extended_state
+  reward: speed
+  batch_size: 32
+  gamma: 0.99
+  epsilon_begin: 1.0
+  epsilon_end: 0.0
+  target_update_steps: 500
+  buffer_size: 40000
+  buffer_type: uniform
+  epsilon_decay_period: 0.8 # 80% of the total number of episodes
+  number_of_layers: 3
+  number_of_units: 512
+  delayed_epsilon: 1
+
+IQ:
+  state: tabular
+  reward: wait
+  discount: 0.99
+  epsilon: 0.03
+
+IDQN:
+  state: extended_state
+  reward: wait
+  batch_size: 32
+  discount: 0.99
+  epsilon_begin: 1.0
+  epsilon_end: 0.0
+  target_update_steps: 500
+  buffer_size: 40000
+  buffer_type: uniform
+  epsilon_decay_period: 0.8 # 80% of the total number of episodes
+  number_of_layers: 3
+  number_of_units: 512
+  delayed_epsilon: 1
+
+MPLight:
+  state: mplight
+  reward: pressure
+  learning_rate: 5e-5
+  demand_shape: 1
+  batch_size: 32
+  discount: 0.8
+  epsilon_begin: 1.0
+  epsilon_end: 0.0
+  target_update_steps: 500
+  buffer_size: 10000
+  buffer_type: uniform
+  epsilon_decay_period: 0.8
+
+AdvancedMPLight:
+  state: advanced_mplight
+  reward: pressure
+  learning_rate: 3e-5
+  demand_shape: 1
+  batch_size: 32
+  discount: 0.8
+  epsilon_begin: 1.0
+  epsilon_end: 0.0
+  target_update_steps: 500
+  buffer_size: 40000
+  buffer_type: uniform
+  epsilon_decay_period: 0.8
+
+IDualCoIn:
+  state: extended_state
+  reward: wait
+  epsilon_disp: 0.1
+  epsilon_b: 0.1
+
+IPPO:
+  state: extended_state
+  reward: wait
+  learning_rate: 2.5e-4
+  number_of_layers: 3
+  number_of_units: 512
+  adam_epsilon: 1e-5
+  clip_eps: 0.1
+  update_interval: 1024
+  batch_size: 256
+  epochs: 4
+  entropy_coef: 0.001
+  max_grad_norm: 0.5
+  standardize_advantages: True
+
+FMA2C:
+  state: fma2c
+  reward: fma2c
+  management_acts: 4
+  rmsp_alpha: 0.99
+  rmsp_epsilon: 1e-5
+  max_grad_norm: 40
+  gamma: 0.96
+  lr_init: 2.5e-4
+  lr_decay: constant
+  entropy_coef_init: 0.001
+  entropy_coef_min: 0.001
+  entropy_decay: constant
+  entropy_ratio: 0.5
+  value_coef: 0.5
+  num_lstm: 64
+  num_fw: 128
+  num_ft: 32
+  num_fp: 64
+  batch_size: 120
+  reward_norm: 2000.0
+  reward_clip: 2.0
+  coef: 0.4
+  coop_gamma: 0.9
+  clip_wave: 4.0
+  clip_wait: 4.0
+  norm_wave: 5.0
+  norm_wait: 100.0
+  alpha: 0.75

@@ -1,0 +1,29 @@
+<routes>
+    <vType vClass="passenger" id="Car" />
+	<route id="north" edges="A2A3 A3top0" />
+	<route id="south" edges="top0A3 A3A2" />
+    <route id="east" edges="left3A3 A3B3" />
+    <route id="west" edges="B3A3 A3left3" />
+    <route id="south-left" edges="top0A3 A3B3" />
+    <route id="north-left" edges="A2A3 A3left3" />
+	<route id="east-left" edges="left3A3 A3top0" />
+	<route id="west-left" edges="B3A3 A3A2" />
+	<route id="south-right" edges="top0A3 A3left3" />
+    <route id="north-right" edges="A2A3 A3B3" />
+	<route id="east-right" edges="left3A3 A3A2" />
+	<route id="west-right" edges="B3A3 A3top0" />
+    <interval begin="0" end="3600">
+		<flow id="0" route="east" number="1800" type="Car" departLane="free" departSpeed="last" />
+        <flow id="1" route="west" number="1800" type="Car" departLane="free" departSpeed="last" />
+        <flow id="2" route="north" number="1800" type="Car" departLane="free" departSpeed="last" />
+        <flow id="3" route="south" number="1800" type="Car" departLane="free" departSpeed="last" />
+        <flow id="4" route="south-left" number="300" type="Car" departLane="free" departSpeed="last" />
+        <flow id="5" route="north-left" number="300" type="Car" departLane="free" departSpeed="last" />
+		<flow id="6" route="east-left" number="300" type="Car" departLane="free" departSpeed="last" />
+		<flow id="7" route="west-left" number="300" type="Car" departLane="free" departSpeed="last" />
+		<flow id="8" route="south-right" number="900" type="Car" departLane="free" departSpeed="last" />
+        <flow id="9" route="north-right" number="900" type="Car" departLane="free" departSpeed="last" />
+		<flow id="10" route="east-right" number="900" type="Car" departLane="free" departSpeed="last" />
+		<flow id="11" route="west-right" number="900" type="Car" departLane="free" departSpeed="last" />
+    </interval>
+</routes>

@@ -1,0 +1,17 @@
+<routes>
+    <vType vClass="passenger" id="Car" />
+    <route id="east" edges="left3A3 A3B3 B3C3" />
+    <route id="west" edges="C3B3 B3A3 A3left3" />
+    <route id="south-left" edges="top0A3 A3A2" />
+    <route id="north-left" edges="A2A3 A3top0" />
+    <route id="south-right" edges="top1B3 B3B2" />
+    <route id="north-right" edges="B2B3 B3top1" />
+    <interval begin="0" end="3600">
+        <flow id="0" route="east" number="1000" type="Car" departLane="free" departSpeed="desired" />
+        <flow id="1" route="west" number="500" type="Car" departLane="free" departSpeed="desired" />
+        <flow id="2" route="south-left" number="500" type="Car" departLane="free" departSpeed="desired" />
+        <flow id="3" route="north-left" number="500" type="Car" departLane="free" departSpeed="desired" />
+        <flow id="4" route="south-right" number="500" type="Car" departLane="free" departSpeed="desired" />
+        <flow id="5" route="north-right" number="500" type="Car" departLane="free" departSpeed="desired" />
+    </interval>
+</routes>
