@@ -114,6 +114,14 @@ pfrl\_dqn
    :undoc-members:
    :show-inheritance:
 
+pfrl\_cbpdqn
+----------------------------------------
+
+.. automodule:: resco_benchmark.agents.pfrl_cbpdqn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pfrl\_ppo
 ----------------------------------------
 

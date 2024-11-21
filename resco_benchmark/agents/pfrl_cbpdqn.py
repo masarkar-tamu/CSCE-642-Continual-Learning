@@ -29,7 +29,7 @@ from resco_benchmark.agents.agent import IndependentAgent, Agent
 logger = logging.getLogger(__name__)
 
 
-class IDQN(IndependentAgent):
+class CBPIDQN(IndependentAgent):
     def __init__(self, obs_act):
         super().__init__(obs_act)
         for agent_id in obs_act:
@@ -51,14 +51,34 @@ class IDQN(IndependentAgent):
                     model.append(nn.ReLU())
                 model.append(nn.Flatten())
 
-            model.append(nn.Linear(input_size, cfg.number_of_units))
+            old_linear_hidden = nn.Linear(input_size, cfg.number_of_units)
+            model.append(old_linear_hidden)
             if "linear_model" not in cfg:
                 model.append(nn.ReLU())
             for i in range(cfg.number_of_layers):
-                model.append(nn.Linear(cfg.number_of_units, cfg.number_of_units))
+                new_linear_hidden = nn.Linear(cfg.number_of_units, cfg.number_of_units)
+                if i:
+                    cbp_hidden = CBPLinear(
+                        in_layer=old_linear_hidden,
+                        out_layer=new_linear_hidden,
+                        replacement_rate=1e-4,
+                        maturity_threshold=1000,
+                    )
+                    model.append(cbp_hidden)
+                model.append(new_linear_hidden)
                 if "linear_model" not in cfg:
                     model.append(nn.ReLU())
-            model.append(nn.Linear(cfg.number_of_units, act_space))
+                old_linear_hidden = new_linear_hidden
+            
+            final_linear = nn.Linear(cfg.number_of_units, act_space)
+            # cbp_final_hidden = CBPLinear(
+            #         in_layer=old_linear_hidden,
+            #         out_layer=final_linear,
+            #         replacement_rate=1e-4,
+            #         maturity_threshold=1000,
+            #     )
+            # model.append(cbp_final_hidden)
+            model.append(final_linear)
             model.append(DiscreteActionValueHead())
 
             self.agents[agent_id] = DQNAgent(agent_id, act_space, model)
