@@ -69,6 +69,21 @@ IDQN:
   number_of_units: 512
   delayed_epsilon: 1
 
+CBPIDQN:
+  state: extended_state
+  reward: wait
+  batch_size: 32
+  discount: 0.99
+  epsilon_begin: 1.0
+  epsilon_end: 0.0
+  target_update_steps: 500
+  buffer_size: 40000
+  buffer_type: uniform
+  epsilon_decay_period: 0.8 # 80% of the total number of episodes
+  number_of_layers: 3
+  number_of_units: 512
+  delayed_epsilon: 1
+
 MPLight:
   state: mplight
   reward: pressure
