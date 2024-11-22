@@ -1,0 +1,10 @@
+<configuration>
+  <input>
+    <net-file value="grid1x2.net.xml" />
+    <route-files value="grid1x2_4.0xFIXED-tr1-grid1x2-0-wave-wait-f4.0-d1-lFalse.flo.xml" />
+  </input>
+  <time>
+    <begin value="0" />
+    <end value="3600" />
+  </time>
+</configuration>

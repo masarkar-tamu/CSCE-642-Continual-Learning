@@ -1,0 +1,60 @@
+(default):
+  names_map:
+    # Metric display names
+    'timeLoss':       'Average Delay'
+    'duration':       'Average Travel Time'
+    'waitingTime':    'Average Waiting Time'
+    'rewards':        'Reward'
+    'max_queues':     'Max Queue Length'
+    'queue_lengths':  'Average Queue Length'
+    'vehicles':       'Demand'
+
+    # Axis labelling
+    'yaxis_timeLoss':       'Delay (s)'
+    'yaxis_duration':       'Travel Time (s)'
+    'yaxis_waitingTime':    'Waiting Time (s)'
+    'yaxis_rewards':         'Reward total'
+    'yaxis_max_queues':      'Queue length'
+    'yaxis_queue_lengths':  'Queue length'
+    'yaxis_vehicles':       'Vehicles (vph)'
+
+    # Map display names
+    'cologne1': 'Cologne Single'
+    'cologne3': 'Cologne Corridor'
+    'cologne8': 'Cologne Region'
+    'ingolstadt1': 'Ingolstadt Single'
+    'ingolstadt7': 'Ingolstadt Corridor'
+    'ingolstadt21': 'Ingolstadt Region'
+    'saltlake2stateXuniversity': 'University Blvd & S State St, SLC'
+    'saltlake2stateXuniversity_peak': 'University Blvd & S State St, SLC'
+    'saltlake2400sX200w': 'SLC 400S X 200W'
+
+    # Map modifiers
+    modifiers:
+      'peak': ' - Peak Flow'
+      'low': ' - Low Flow'
+      'curriculum': ' - Continual'
+      'flow04': ' - Low Flow'
+      'flow10': ' - Normal Flow'
+
+    # Basic find and replace strings, no checking done on these
+    findreplace:
+      'fixed': 'Fixed Timing'
+      'idqn': 'DQN'
+      'mplight': 'MPLight'
+      'advancedmplight': 'Advanced-MPLight'
+      'fma2c': "FMA2C"
+
+    # Experiment names - hashed index mapping will override default naming scheme
+    092d6a53720c04c583d8a939f13c8da250413a1528196ab9669ac00176c3e3a7: saltlake2stateXuniversity_peak+Fixed Timing
+    84efea41f639f49bf80cba6e7b04078b59cad20390026a714eca3c5f1c6513eb: saltlake2stateXuniversity_peak+DQN
+    f7d9e77cf99582af9420a5e63a3768f8f0ff79974cddac6b4ef5f81020ff9591: saltlake2stateXuniversity_peak+Linear-model DQN
+    a58aba633ab2298fe4893c765b1d84ce85121868977160a74c398c16db33d790: saltlake2stateXuniversity_peak+MPLight
+    7fcd455d321457b0eabe752c198b8459ba8ba3ffc4ef1c46364b618ea8744491: saltlake2stateXuniversity_peak+Advanced-MPLight
+    d85d9e35fabc6a9d024aa28033ca1fbbd7fda3c96d2fa8d3da968f0ae3cd084e: saltlake2stateXuniversity_peak+FMA2C
+
+    31cf72853c2060779c0569239d2c5562cc9360fef51455b6528024b86943ba4a: saltlake2stateXuniversity+Advanced-MPLight
+    a2bd093542a03c4e89642558b6874349f12a10d4ce21d15f0c361411ebcd5fff: saltlake2stateXuniversity+DQN
+    a0961097a14786b41bb86e16972df68b450f7069f9c18db6643978b38488568a: saltlake2stateXuniversity+FMA2C
+    ed9af8e2bae59f53185a06af562b5c18e10431a151065f5c297906ab4f8be7c0: saltlake2stateXuniversity+MPLight
+    95eaa21171d8edfd3de7d3ddbcb5c934b67f20fe5c75e33cf6731cc081e6c5ac: saltlake2stateXuniversity+Fixed Timing

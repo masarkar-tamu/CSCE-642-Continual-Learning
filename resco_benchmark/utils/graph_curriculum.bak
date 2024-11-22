@@ -1,0 +1,188 @@
+import pickle
+import numpy as np
+import os
+
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+
+folder = r'IMultiDQNLoads'
+
+log_dir = r'/home/jault/projects/resco/priv_RESCO/results' + os.sep + folder + os.sep
+
+
+last_n_perf = 5
+fixed_normed = False
+error_bars = True
+
+maps = ['grid1x1']
+
+skip_graphs = ['max_queue', 'duration', 'waitingTime', 'queue_lengths']
+skip_rewards = []
+skip_delays = [0]
+
+included_logs = ['grid1x1_IDQN_fixed_globalRewardsAll.pkl', 'grid1x1_IDQN_drq_globalRewardsAll.pkl']
+if folder is not None:
+    #print(log_dir)
+    included_logs = list()
+    for file in list(os.walk(log_dir)):
+        #print(file)
+        for log in file[2]:
+            if '.pkl' in log:
+                included_logs.append(log)
+
+
+symbols = ['o', 'v', 's', 'P', '*', 'X']
+symbol_map = dict()
+#log_results = dict()
+
+
+def include_results(log_results, log_file):
+
+    with open(log_file, 'rb') as f:
+        tmp = pickle.load(f)
+    #if 'FIXED' not in log_file: print(tmp)
+    for metric in tmp:
+        if metric not in log_results: log_results[metric] = dict()
+        for log in tmp[metric]:
+            if 'FIXED' not in log_file:
+                print(log)
+            if log in log_results[metric]:
+                log_results[metric][log] += tmp[metric][log]
+            else:
+                log_results[metric][log] = tmp[metric][log]
+
+
+def stack_trials(metric, exp_name, truncated=True):
+    stack = list()
+    minlen = np.inf
+    for log in log_results[metric][exp_name]:
+        if len(log) < minlen: minlen = len(log)
+        stack.append(log)
+
+    if truncated:
+        for i in range(len(stack)):
+            stack[i] = np.asarray(stack[i])[:minlen]
+    else:
+        raise NotImplementedError()     # Padding?
+    return np.stack(stack)
+
+
+class ExpDetails:
+    def __init__(self, alg, flow, delay, state, reward_fn, exp_avg, exp_std, swt=None):
+        self.alg = alg
+        self.flow = flow
+        self.delay = delay
+        self.state = state
+        self.reward_fn = reward_fn
+        self.swt = swt
+
+        if exp_avg.shape[0] >= last_n_perf:
+            self.perf = np.mean(exp_avg[-last_n_perf:])
+            self.err = np.mean(exp_std[-last_n_perf:])
+        else:
+            self.perf = np.mean(exp_avg)
+            self.err = np.mean(exp_std)
+
+    def __repr__(self):
+        if self.swt is not None: return ' '.join([self.alg, self.reward_fn, str(self.delay), self.swt])
+        return ' '.join([self.alg, self.reward_fn, str(self.delay)])
+
+    def __eq__(self, other):
+        if self.alg == other.alg and self.state == other.state \
+                and self.reward_fn == other.reward_fn and self.delay == other.delay: return True
+        return False
+
+
+def graph_it():
+    for graph_map in maps:
+        for metric in log_results.keys():
+            if metric in skip_graphs: continue
+            data_points = list()
+            fixed_data_points = dict()
+            for exp_name in log_results[metric].keys():
+                splits = exp_name.split(' ')
+                alg = splits[0]
+                flow = float(splits[5][1:])
+                delay = int(splits[6][1:])
+                state = splits[3]
+                reward_fn = splits[4]
+                map = splits[1]
+
+                if map != graph_map: continue
+                if reward_fn in skip_rewards: continue
+                if delay in skip_delays: continue
+                if reward_fn not in symbol_map: symbol_map[reward_fn] = symbols.pop()
+
+                stack = stack_trials(metric, exp_name)
+                print(exp_name, stack.shape)
+                exp_avg = np.mean(stack, axis=0)
+                exp_std = np.std(stack, axis=0)
+
+                if 'FIXED' not in exp_name:
+                    alg=alg+' '.join(splits[7:])
+                dp = ExpDetails(alg, flow, delay, state, reward_fn, exp_avg, exp_std)
+                data_points.append(dp)
+
+                # Track fixed performance for normalization
+                if dp.alg == 'FIXED':
+                    if dp.reward_fn not in fixed_data_points:
+                        fixed_data_points[dp.reward_fn] = dict()
+                    fixed_data_points[dp.reward_fn][dp.flow] = dp
+
+            data_points = sorted(data_points, key=lambda x: x.flow)
+            data_points = sorted(data_points, key=lambda x: x.delay)
+            data_points = sorted(data_points, key=lambda x: x.reward_fn)
+            data_points = sorted(data_points, key=lambda x: x.alg)
+
+            dp = data_points.pop(0)
+            while len(data_points) != 0:
+                prev = dp
+                collected = list()
+                while dp == prev:
+                    prev = dp
+                    collected.append(dp)
+                    if len(data_points) == 0: break
+                    dp = data_points.pop(0)
+
+                if fixed_normed:
+                    if dp.alg == 'FIXED': continue
+
+                    normed_pts = list()
+                    normed_std = list()
+                    for pt in collected:
+                        fixed = fixed_data_points[pt.reward_fn][pt.flow]
+                        normed_pts.append((pt.perf - fixed.perf) / abs(fixed.perf))
+                        normed_std.append(pt.err / abs(fixed.perf))
+
+                    y = np.asarray(normed_pts)*100
+                    y_err = np.asarray(normed_std)*100
+                else:
+                    y = np.asarray([pt.perf for pt in collected])
+                    y_err = np.asarray([pt.err for pt in collected])
+
+                #if metric == 'reward' and prev.reward_fn != list(fixed_data_points.values())[0].reward_fn: continue
+                if metric == 'timeLoss': y = -y
+
+                x = [pt.flow for pt in collected]
+                #if 'FIXED' in str(prev): continue
+                plt.plot(x, y, label=str(prev), marker=symbol_map[prev.reward_fn])
+                if error_bars: plt.fill_between(x, y - y_err, y + y_err, alpha=0.4)
+            plt.legend()
+            #plt.xlim(right=1.1, left=0.1)
+            #plt.ylim(bottom=-200)
+            #plt.yscale('symlog')
+            plt.title(graph_map + ' ' + metric)
+            plt.xlabel('Traffic demand multiplier')
+            if fixed_normed:
+                plt.ylabel('% Improvement over fixed performance')
+            else:
+                plt.ylabel("Performance")
+            plt.show()
+            plt.clf()
+
+
+if __name__ == '__main__':
+    for log_file in included_logs:
+        include_results(log_results, log_dir + log_file)
+    graph_it()
