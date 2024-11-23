@@ -171,7 +171,6 @@ def generate_flow_from_csv(date_time, flo_file):
             raise FileNotFoundError(
                 "File not found: " + signal_id + "/" + date_time + ".csv"
             )
-
     # Handles traffic recorded, but not from an external road
     A3_dest_tot = {"L": 0, "T": 0, "R": 0}
     B3_dest_tot = {"L": 0, "T": 0, "R": 0}
