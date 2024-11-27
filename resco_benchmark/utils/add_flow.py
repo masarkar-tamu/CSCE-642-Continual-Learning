@@ -2,14 +2,15 @@ import xml.etree.ElementTree as ET
 import numpy as np
 import copy
 import os
+import random
+import logging
 
 from resco_benchmark.config.config import config as cfg
-
 
 # TODO rewrite
 def generate_additional_flow():
     map_path = os.path.join(os.path.dirname(cfg.network))
-    fractional = cfg.flow % 1
+    fractional = cfg.flow - int(cfg.flow)
     multiple = int(cfg.flow)
 
     try:
@@ -21,22 +22,14 @@ def generate_additional_flow():
             multiple = multiple + 1
 
         i = 0
-        removals = []
+        child_set = []
         total_vehicles = 0
         for child in root:
             if child.tag == "trip" or child.tag == "vehicle":
-                child.set("departLane", "free")
-                total_vehicles += 1
-                if fractional != 0 and multiple == 0:
-                    if np.random.random() > fractional:
-                        removals.append(child)
-                    continue  # This is just getting really bad, srry
                 if "_v" in child.attrib["id"]:
                     continue
-                if fractional != 0:
-                    if np.random.random() > fractional:
-                        i += 1
-                        continue
+                child.set("departLane", "free")
+                total_vehicles += 1
                 for j in range(1, multiple):
                     new_child = copy.deepcopy(child)
 
@@ -44,13 +37,20 @@ def generate_additional_flow():
                     root.insert(i + 1, new_child)
                     total_vehicles += 1
                     i += 1
+                child_set.append((child, i))
+                
             i += 1
-
         if fractional != 0:
+            sampled_list = random.sample(child_set, int(len(child_set) * fractional))
             if multiple != 0:
-                multiple = multiple - 1
+                for child, position in sampled_list:
+                    new_child = copy.deepcopy(child)
+
+                    new_child.attrib["id"] = new_child.attrib["id"] + "_v" + str(multiple) 
+                    root.insert(position + 1, new_child)
+                    total_vehicles += 1
             else:
-                for child in removals:
+                for child,position in sampled_list:
                     root.remove(child)
                     total_vehicles -= 1
 
