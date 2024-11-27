@@ -1,0 +1,57 @@
+(default):
+  names_map:
+    # Metric display names
+    'timeLoss':       'Average Delay'
+    'duration':       'Average Travel Time'
+    'waitingTime':    'Average Waiting Time'
+    'rewards':        'Reward'
+    'max_queues':     'Max Queue Length'
+    'queue_lengths':  'Average Queue Length'
+    'vehicles':       'Demand'
+    'phase_length':   'Phase Length'
+
+    # Axis labelling
+    'yaxis_timeLoss':       'Delay (s)'
+    'yaxis_duration':       'Travel Time (s)'
+    'yaxis_waitingTime':    'Waiting Time (s)'
+    'yaxis_rewards':         'Reward total'
+    'yaxis_max_queues':      'Queue length'
+    'yaxis_queue_lengths':  'Queue length'
+    'yaxis_vehicles':       'Vehicles (vph)'
+
+    # Map display names
+    'cologne1': 'Cologne Single'
+    'cologne3': 'Cologne Corridor'
+    'cologne8': 'Cologne Region'
+    'ingolstadt1': 'Ingolstadt Single'
+    'ingolstadt7': 'Ingolstadt Corridor'
+    'ingolstadt21': 'Ingolstadt Region'
+    'saltlake2stateXuniversity': 'Univ & State - Year'
+    'saltlake2stateXuniversity_peak': 'Univ & State - Peak'
+    'saltlake1AstateXuniversity_peak': 'Univ & State - Peak - West Signal'
+    'saltlake1BstateXuniversity_peak': 'Univ & State - Peak - East Signal'
+    'saltlake2stateXuniversity_peakcontrolledSignals@A3': 'Univ & State - Peak - Isolated West Signal'
+    'saltlake2stateXuniversity_peakcontrolledSignals@B3': 'Univ & State - Peak - Isolated East Signal'
+    'saltlake2400sX200w': '400S & 200W - Year'
+    'saltlake2400sX200w_peak': '400S & 200W - Peak'
+    'saltlake1A400sX200w_peak': '400S & 200W - Peak - West Signal'
+    'saltlake1B400sX200w_peak': '400S & 200W - Peak - East Signal'
+    'saltlake2400sX200w_peakcontrolledSignals@A3': '400S & 200W - Peak - Isolated Wast Signal'
+    'saltlake2400sX200w_peakcontrolledSignals@B3': '400S & 200W - Peak - Isolated East Signal'
+
+    # Basic find and replace strings, no checking done on these
+    findreplace:
+      'fixed': 'Fixed Timing'
+      'maxpressure': 'Max Pressure'
+      'maxwave': 'Max Wave'
+      'idqn': 'DQN'
+      'advancedmplight': 'Advanced-MPLight'
+      'mplight': 'MPLight'
+      'fma2c': "FMA2C"
+      'ippo': 'IPPO'
+      'icoinplus': 'Dual COIN'
+      'controlledSignals@A3': ''
+      'controlledSignals@B3': ''
+      'epsilonEnd@002_epsilonDecayPeriod@008493150684931507_': ''
+
+    # Experiment names - hashed index mapping will override default naming scheme
