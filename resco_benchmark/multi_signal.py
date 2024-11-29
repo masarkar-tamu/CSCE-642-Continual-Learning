@@ -430,6 +430,9 @@ class MultiSignal(gym.Env):
         self.episode_reward = 0.0
         self.cumulative_episode += 1
 
+        if self.cumulative_episode >= 300:
+            cfg.flow = 2.0
+
         self.sumo_start()
 
         for ts in self.signal_ids:

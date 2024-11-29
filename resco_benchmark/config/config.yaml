@@ -17,11 +17,11 @@
             config_builder: False    # Dry-run to generate config/hashes before running full trials so they can be named
 
             action_set: Phase
-            episodes: 100
+            episodes: 400
             converged: null   # Number of episodes to wait for convergence, null to disable, at least 'episodes' to run
             log_dir: results
             gui: False
-            libsumo: True
+            libsumo: False
 
             load_sim: null
             save_frequency: 20

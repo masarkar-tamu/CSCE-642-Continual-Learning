@@ -40,12 +40,12 @@ class CBPLinear(nn.Module):
             out_layer: nn.Linear,
             ln_layer: nn.LayerNorm = None,
             bn_layer: nn.BatchNorm1d = None,
-            replacement_rate=1e-1,
+            replacement_rate=1e-4,
             maturity_threshold=100,
             init='kaiming',
             act_type='relu',
             util_type='contribution',
-            decay_rate=0,
+            decay_rate=0.99,
     ):
         super().__init__()
         if type(in_layer) is not nn.Linear:

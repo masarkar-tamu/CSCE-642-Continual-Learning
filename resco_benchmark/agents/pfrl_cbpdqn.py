@@ -57,27 +57,26 @@ class CBPIDQN(IndependentAgent):
                 model.append(nn.ReLU())
             for i in range(cfg.number_of_layers):
                 new_linear_hidden = nn.Linear(cfg.number_of_units, cfg.number_of_units)
-                if i:
-                    cbp_hidden = CBPLinear(
-                        in_layer=old_linear_hidden,
-                        out_layer=new_linear_hidden,
-                        replacement_rate=1e-4,
-                        maturity_threshold=1000,
-                    )
-                    model.append(cbp_hidden)
+                cbp_hidden = CBPLinear(
+                    in_layer=old_linear_hidden,
+                    out_layer=new_linear_hidden,
+                    replacement_rate=1e-3,
+                    maturity_threshold=1000,
+                )
+                model.append(cbp_hidden)
                 model.append(new_linear_hidden)
                 if "linear_model" not in cfg:
                     model.append(nn.ReLU())
                 old_linear_hidden = new_linear_hidden
             
             final_linear = nn.Linear(cfg.number_of_units, act_space)
-            # cbp_final_hidden = CBPLinear(
-            #         in_layer=old_linear_hidden,
-            #         out_layer=final_linear,
-            #         replacement_rate=1e-4,
-            #         maturity_threshold=1000,
-            #     )
-            # model.append(cbp_final_hidden)
+            cbp_final_hidden = CBPLinear(
+                    in_layer=old_linear_hidden,
+                    out_layer=final_linear,
+                    replacement_rate=1e-4,
+                    maturity_threshold=1000,
+                )
+            model.append(cbp_final_hidden)
             model.append(final_linear)
             model.append(DiscreteActionValueHead())
 
