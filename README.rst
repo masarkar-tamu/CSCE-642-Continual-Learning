@@ -63,7 +63,11 @@ We conducted three experiments to evaluate different traffic signal control meth
 
 **2. Comparison of Methods on Salt Lake Map (400 hours)**: Applied the same methods to a simulation using real-time data from the ATSPM website. Traffic flow significantly increased after 300 hours to simulate non-stationary conditions.
 
-- Traffic environment setting before running: same as above.
+- Traffic environment setting before running:
+    - Go to `config.yaml` and set episodes to 400.
+    - Go to `agent.yaml` and set `epsilon_end` to 0.02 for `IDQN` and `CBPIDQN`.
+    - Go to `multi_signal.py` on line `427` and set `cfg.flow` to 2.0 on condition `self.cummulative_episode` greater than 300.
+
 - Then run the following commands:
 
 .. code-block:: bash
@@ -76,11 +80,7 @@ We conducted three experiments to evaluate different traffic signal control meth
 
 **3. CBP-IDQN vs. DQN (Detailed Analysis):** Focused solely on CBP-IDQN and DQN for a more detailed comparison. Epsilon end was set to 0.02 to encourage exploration and adaptability to dynamic traffic patterns.
 
-- Traffic environment setting before running:
-    - Go to `config.yaml` and set episodes to 400.
-    - Go to `agent.yaml` and set `epsilon_end` to 0.02 for `IDQN` and `CBPIDQN`.
-    - Go to `multi_signal.py` on line `427` and set `cfg.flow` to 2.0 on condition `self.cummulative_episode` greater than 300.
-
+- Traffic environment setting before running: same as first experiment.
 - Then run the following commands:
 
 .. code-block:: bash
