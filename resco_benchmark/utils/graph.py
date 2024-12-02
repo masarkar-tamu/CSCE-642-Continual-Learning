@@ -211,7 +211,7 @@ def graph_it(results):
                 ax.set_title(f"{map_name}")
                 ax.set_ylabel(ylabel)
                 # ax.set_yscale("symlog")
-                ax.set_ylim(max(0, ax.get_ylim()[0]), max_y * 10)
+                ax.set_ylim(max(0, ax.get_ylim()[0]), max_y * 2.5)
                 plt.legend()
                 fig.tight_layout()
 

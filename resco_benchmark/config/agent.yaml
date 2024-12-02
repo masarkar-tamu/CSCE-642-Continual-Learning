@@ -75,7 +75,7 @@ IDQN:
   batch_size: 32
   discount: 0.99
   epsilon_begin: 1.0
-  epsilon_end: 0.0
+  epsilon_end: 0.02
   target_update_steps: 500
   buffer_size: 20000
   buffer_type: uniform
@@ -90,7 +90,7 @@ CBPIDQN:
   batch_size: 32
   discount: 0.99
   epsilon_begin: 1.0
-  epsilon_end: 0.0
+  epsilon_end: 0.02
   target_update_steps: 500
   buffer_size: 40000
   buffer_type: uniform

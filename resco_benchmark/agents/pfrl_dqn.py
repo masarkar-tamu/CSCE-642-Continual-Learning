@@ -312,7 +312,6 @@ class SharedDQN(DQN):
             self.batch_last_action = list(batch_action)
         else:
             batch_action = batch_argmax
-
         valid_batch_action = []
         for i in range(len(batch_action)):
             valid_batch_action.append(valid_acts[i][batch_action[i]])

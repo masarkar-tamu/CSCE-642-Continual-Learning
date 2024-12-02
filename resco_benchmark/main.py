@@ -63,7 +63,6 @@ def run_trial():
 
     state_fn = getattr(states, cfg.state)
     reward_fn = getattr(rewards, cfg.reward)
-
     env = MultiSignal(state_fn, reward_fn)
 
     # Get agent id's, observation shapes, and action sizes from env

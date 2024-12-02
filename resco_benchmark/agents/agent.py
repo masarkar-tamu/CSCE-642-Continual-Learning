@@ -1,6 +1,9 @@
+import logging
+
 import torch
 from resco_benchmark.config.config import config as cfg
 
+logger = logging.getLogger(__name__)
 
 class Agent(object):
     def __init__(self):

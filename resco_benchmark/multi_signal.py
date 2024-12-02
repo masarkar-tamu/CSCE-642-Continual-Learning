@@ -62,10 +62,8 @@ class MultiSignal(gym.Env):
                 for signal in flat_state:
                     flat_state[signal] = flat_state[signal].ravel()
                 return flat_state
-
             state_wrapped = flat_wrapper
         self.state_fn = state_wrapped
-
         self.date = self.resolve_date()
 
         self.sumo_start()
@@ -82,7 +80,6 @@ class MultiSignal(gym.Env):
             )  # Facilitates signal communication
             self.signals[signal_id].observe()
         observations = self.state_fn(self.signals)
-
         self.sumo_cmd = None  # Force regeneration of sumo command
 
         self.obs_act = dict()
@@ -93,7 +90,6 @@ class MultiSignal(gym.Env):
             if signal_id in self.signals:
                 act_size = len(self.signals[signal_id].green_phases)
             self.obs_act[signal_id] = (observations[signal_id].shape, act_size)
-
         # Override action space if not standard 'Phase' type
         self.action_mask = None
         if cfg.action_set is not None and cfg.action_set != "Phase":
@@ -108,7 +104,6 @@ class MultiSignal(gym.Env):
             self.state_fn, self.reward_fn = self.collect_scale(
                 observations, state_wrapped, reward_fn
             )
-
         # Calculate decay period from % input for convenience
         steps_per_episode = int((cfg.end_time - cfg.start_time) / cfg.step_length)
         cfg.steps = steps_per_episode * cfg.episodes
@@ -200,7 +195,6 @@ class MultiSignal(gym.Env):
                 # observe new state and reward
                 observations = self.state_fn(self.signals)
                 rewards = self.reward_fn(self.signals)
-
                 for signal in self.signals:
                     max_observations[signal] = np.maximum(
                         max_observations[signal], np.abs(observations[signal])
@@ -430,7 +424,7 @@ class MultiSignal(gym.Env):
         self.episode_reward = 0.0
         self.cumulative_episode += 1
 
-        if self.cumulative_episode >= 300:
+        if self.cumulative_episode >= 600:
             cfg.flow = 2.0
 
         self.sumo_start()
@@ -477,7 +471,6 @@ class MultiSignal(gym.Env):
 
         if self.action_mask is not None:
             act = self.action_mask.act(act)
-
         cutoff = traci.simulation.getTime()
         for signal in self.signals:
             self.signals[signal].switch_phase(act[signal])

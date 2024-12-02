@@ -1,11 +1,13 @@
 from __future__ import annotations
 import typing
+import logging
 
 import numpy as np
 
 from resco_benchmark.config.config import config as cfg
 from resco_benchmark.traffic_signal import Signal, Lane
 
+logger = logging.getLogger(__name__)
 
 def advanced_mplight(signals):
     observations = dict()

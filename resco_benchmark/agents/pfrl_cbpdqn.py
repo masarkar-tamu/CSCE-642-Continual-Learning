@@ -60,8 +60,8 @@ class CBPIDQN(IndependentAgent):
                 cbp_hidden = CBPLinear(
                     in_layer=old_linear_hidden,
                     out_layer=new_linear_hidden,
-                    replacement_rate=1e-3,
-                    maturity_threshold=1000,
+                    replacement_rate=1e-4,
+                    maturity_threshold=50000,
                 )
                 model.append(cbp_hidden)
                 model.append(new_linear_hidden)
@@ -74,7 +74,7 @@ class CBPIDQN(IndependentAgent):
                     in_layer=old_linear_hidden,
                     out_layer=final_linear,
                     replacement_rate=1e-4,
-                    maturity_threshold=1000,
+                    maturity_threshold=50000,
                 )
             model.append(cbp_final_hidden)
             model.append(final_linear)
